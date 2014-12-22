@@ -173,11 +173,13 @@ class TwitterAPIExchange
     /**
      * Perform the actual data retrieval from the API
      * 
-     * @param boolean $return If true, returns data.
+     * @param boolean $return      If true, returns data.
+     * @param array   $curlOptions Optional array of CURL Options
      * 
      * @return string json If $return param is true, returns json data.
+     * @throws Exception
      */
-    public function performRequest($return = true)
+    public function performRequest($return = true, $curlOptions = array())
     {
         if (!is_bool($return)) 
         { 
@@ -195,7 +197,7 @@ class TwitterAPIExchange
             CURLOPT_URL => $this->url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_TIMEOUT => 10,
-        );
+        ) + $curlOptions;
 
         if (!is_null($postfields))
         {
